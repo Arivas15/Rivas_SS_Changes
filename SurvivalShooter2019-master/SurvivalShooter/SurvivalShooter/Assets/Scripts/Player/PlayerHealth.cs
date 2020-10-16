@@ -1,8 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
-using System.Collections;
 using UnityEngine.SceneManagement;
-
+using System.Collections;
 
 public class PlayerHealth : MonoBehaviour
 {
@@ -25,17 +24,17 @@ public class PlayerHealth : MonoBehaviour
     bool damaged;
 
 
-    void Awake ()
+    void Awake()
     {
-        anim = GetComponent <Animator> ();
-        playerAudio = GetComponent <AudioSource> ();
-        playerMovement = GetComponent <PlayerMovement> ();
-        playerShooting = GetComponentInChildren <PlayerShooting> ();
+        anim = GetComponent<Animator>();
+        playerAudio = GetComponent<AudioSource>();
+        playerMovement = GetComponent<PlayerMovement>();
+        playerShooting = GetComponentInChildren<PlayerShooting>();
         currentHealth = startingHealth;
     }
 
 
-    void Update ()
+    void Update()
     {
         if(damaged)
         {
@@ -44,7 +43,7 @@ public class PlayerHealth : MonoBehaviour
         }
         else
         {
-            damageImage.color = Color.Lerp (damageImage.color, Color.clear, flashSpeed * Time.deltaTime);
+            damageImage.color = Color.Lerp(damageImage.color, Color.clear, flashSpeed * Time.deltaTime);
         }
         damaged = false;
         if (currentHealth <= 20)
@@ -55,7 +54,7 @@ public class PlayerHealth : MonoBehaviour
     }
 
 
-    public void TakeDamage (int amount)
+    public void TakeDamage(int amount)
     {
         damaged = true;
 
@@ -63,22 +62,22 @@ public class PlayerHealth : MonoBehaviour
 
         healthSlider.value = currentHealth;
 
-        playerAudio.Play ();
+        playerAudio.Play();
 
         if (currentHealth <= 0 && !isDead)
         {
-            Death ();
+            Death();
         }
     }
 
 
-    void Death ()
+    void Death()
     {
         isDead = true;
 
-        playerShooting.DisableEffects ();
+        playerShooting.DisableEffects();
 
-        anim.SetTrigger ("Die");
+        anim.SetTrigger("Die");
 
         if(camSize.orthographicSize >= 1)
         {
@@ -92,9 +91,8 @@ public class PlayerHealth : MonoBehaviour
         playerShooting.enabled = false;
     }
 
-
-    public void RestartLevel ()
+    public void RestartLevel()
     {
-        SceneManager.LoadScene (0);
+        SceneManager.LoadScene(0);
     }
 }

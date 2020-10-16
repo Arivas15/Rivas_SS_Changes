@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+﻿ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -25,8 +25,10 @@ public class PlayerMovement : MonoBehaviour
 		float h = Input.GetAxisRaw("Horizontal");
 		float v = Input.GetAxisRaw("Vertical");
 
+		float t = Input.GetAxisRaw("Turning");
+
 		Move(h, v);
-		Turning();
+		Turning(t);
 		Animating(h, v);
 	}
 
@@ -49,18 +51,9 @@ public class PlayerMovement : MonoBehaviour
 		playerRigidbody.MovePosition(transform.position + movement);
 	}
 
-	void Turning()
+	void Turning(float t)
 	{
-		Ray camRay = Camera.main.ScreenPointToRay(Input.mousePosition);
-		RaycastHit floorHit;
-
-		if (Physics.Raycast(camRay, out floorHit, camRayLength, floorMask)) {
-			Vector3 playerToMouse = floorHit.point - transform.position;
-			playerToMouse.y = 0f;
-
-			Quaternion newRotation = Quaternion.LookRotation(playerToMouse);
-			playerRigidbody.MoveRotation(newRotation);
-		}
+		transform.Rotate(0, 5.0f * t, 0, Space.World);
 	}
 
 	void Animating(float h, float v)
